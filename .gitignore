@@ -2,3 +2,5 @@
 .workdb
 .DS_Store
 .env
+.mysql_backup
+.work_backup
