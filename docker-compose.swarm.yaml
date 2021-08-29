@@ -1,0 +1,62 @@
+version: "3.7"
+
+networks:
+  net:
+    driver: overlay
+    attachable: true
+    name: DB_net
+  work:
+    driver: overlay
+    attachable: true
+    name: DB_work
+
+services:
+  mariadb:
+    image: mariadb
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./.mysql_backup:/var/lib/mysql
+    networks:
+      - net
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  workdb:
+    image: mariadb
+    env_file:
+      - ./.env
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    volumes:
+      - ./.work_backup:/var/lib/mysql
+    networks:
+      - work
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+
+  adminer:
+    image: adminer
+    volumes:
+      - ./adminer/adminer.css:/var/www/html/adminer.css
+      - ./adminer/custom_design:/var/www/html/custom_design
+      - ./adminer/plugins:/var/www/html/plugins-enabled
+    networks:
+      - net
+      - work
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.db.entrypoints=websecure
+        - traefik.http.routers.db.rule=Host(`adminer.nas.hyeon.pro`)
+        - traefik.http.routers.db.tls.certresolver=leresolver
+        - traefik.http.services.db.loadbalancer.server.port=8080

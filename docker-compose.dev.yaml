@@ -1,0 +1,47 @@
+version: "3.7"
+
+services:
+  mariadb:
+    image: mariadb
+    container_name: DB__wordpress
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+    volumes:
+      - ./.mariadb:/var/lib/mysql
+    expose:
+      - 3306
+    networks:
+      - net
+
+  workdb:
+    image: mariadb
+    container_name: DB__workwp
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1
+    volumes:
+      - ./.workdb:/var/lib/mysql
+    expose:
+      - 3306
+    networks:
+      - work
+
+  adminer:
+    image: adminer
+    container_name: DB__adminer
+    restart: always
+    ports:
+      - 9999:8080
+    volumes:
+      - ./adminer/adminer.css:/var/www/html/adminer.css
+      - ./adminer/custom_design:/var/www/html/custom_design
+    networks:
+      - work
+      - net
+
+networks:
+  net:
+    driver: bridge
+  work:
+    driver: bridge

@@ -1,0 +1,4 @@
+.mariadb
+.workdb
+.DS_Store
+.env
