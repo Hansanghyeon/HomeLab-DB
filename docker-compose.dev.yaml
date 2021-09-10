@@ -40,6 +40,16 @@ services:
       - work
       - net
 
+  redis:
+    container_name: redis
+    image: redis:6.2.5
+    restart: unless-stopped
+    volumes:
+      - ./.redis:/data
+    networks:
+      - work
+      - net
+
 networks:
   net:
     driver: bridge
