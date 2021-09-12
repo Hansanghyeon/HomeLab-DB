@@ -40,6 +40,18 @@ services:
       placement:
         constraints:
           - node.role == manager
+          
+  redis:
+    image: redis:6.2.5
+    volumes:
+      - ./.redis:/data
+    networks:
+      - work
+      - net
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
 
   adminer:
     image: adminer
