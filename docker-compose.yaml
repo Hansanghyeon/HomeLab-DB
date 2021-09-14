@@ -61,14 +61,14 @@ services:
         - traefik.http.routers.db.tls.certresolver=leresolver
         - traefik.http.services.db.loadbalancer.server.port=8080
 
-  redis:
-    image: redis:latest
-    volumes:
-      - ./.redis:/data
-    networks:
-      - work
-      - net
-    deploy:
-      placement:
-        constraints:
-          - node.role == manager
+  # redis:
+  #   image: redis:latest
+  #   volumes:
+  #     - ./.redis:/data
+  #   networks:
+  #     - work
+  #     - net
+  #   deploy:
+  #     placement:
+  #       constraints:
+  #         - node.role == manager
