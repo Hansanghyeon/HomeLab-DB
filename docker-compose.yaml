@@ -12,7 +12,7 @@ networks:
 
 services:
   mariadb:
-    image: mariadb
+    image: mariadb:latest
     env_file:
       - ./.env
     environment:
@@ -27,7 +27,7 @@ services:
           - node.role == manager
 
   workdb:
-    image: mariadb
+    image: mariadb:latest
     env_file:
       - ./.env
     environment:
@@ -42,7 +42,7 @@ services:
           - node.role == manager
 
   adminer:
-    image: adminer
+    image: adminer:latest
     volumes:
       - ./adminer/adminer.css:/var/www/html/adminer.css
       - ./adminer/custom_design:/var/www/html/custom_design
@@ -62,7 +62,7 @@ services:
         - traefik.http.services.db.loadbalancer.server.port=8080
 
   redis:
-    image: redis:6.2.5
+    image: redis:latest
     volumes:
       - ./.redis:/data
     networks:
