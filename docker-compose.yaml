@@ -31,7 +31,7 @@ services:
     env_file:
       - ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${WORK_MYSQL_ROOT_PASSWORD}
     volumes:
       - ./.work_backup:/var/lib/mysql
     networks:
