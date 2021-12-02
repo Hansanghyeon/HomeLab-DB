@@ -16,7 +16,7 @@ services:
     env_file:
       - ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
     volumes:
       - ./.mysql_backup:/var/lib/mysql
     networks:
@@ -31,11 +31,27 @@ services:
     env_file:
       - ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: ${WORK_MYSQL_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${ROOT_PASSWORD}
     volumes:
       - ./.work_backup:/var/lib/mysql
     networks:
       - work
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+  
+  postgres:
+    image: postgres
+    env_file:
+      - ./.env
+    networks:
+      - work
+      - net
+    environment:
+      POSTGRES_PASSWORD: ${ROOT_PASSWORD}
+    volumes:
+      - ./.pgdata:/var/lib/postgresql/data
     deploy:
       placement:
         constraints:
