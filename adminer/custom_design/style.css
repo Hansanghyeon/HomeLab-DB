@@ -1,5 +1,6 @@
 @import url("./adminer-dracula-theme/adminer.css") screen and (prefers-color-scheme: dark);
 @import url("./adminer-dracula-theme/override.css") screen and (prefers-color-scheme: dark);
 @import url("./Adminer-Material-Theme/adminer.css") screen and (prefers-color-scheme: light);
+@import url("./Adminer-Material-Theme/override.css") screen and (prefers-color-scheme: light);
 /* @import url("./Hydra-Dark-Theme-for-Adminer/adminer.css") screen and (prefers-color-scheme: dark); */
 /* @import url("./Hydra-Dark-Theme-for-Adminer/override.css") screen and (prefers-color-scheme: dark); */
