@@ -24,7 +24,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role == manager
+          - node.hostname == ${HOSTNAME}
 
   workdb:
     image: mariadb:latest
@@ -39,8 +39,8 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role == manager
-  
+          - node.hostname == ${HOSTNAME}
+
   postgres:
     image: postgres
     env_file:
@@ -55,7 +55,7 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role == manager
+          - node.hostname == ${HOSTNAME}
 
   adminer:
     image: adminer:latest
@@ -69,14 +69,13 @@ services:
     deploy:
       placement:
         constraints:
-          - node.role == manager
+          - node.hostname == ${HOSTNAME}
       labels:
         - traefik.enable=true
-        - traefik.http.routers.db.entrypoints=websecure
-        - traefik.http.routers.db.rule=Host(`adminer.nas.hyeon.pro`)
-        - traefik.http.routers.db.tls.certresolver=leresolver
-        - traefik.http.services.db.loadbalancer.server.port=8080
-
+        - traefik.http.routers.adminer.entrypoints=websecure
+        - traefik.http.routers.adminer.rule=Host(`adminer.nas.hyeon.pro`)
+        - traefik.http.routers.adminer.tls.certresolver=leresolver
+        - traefik.http.services.adminer.loadbalancer.server.port=8080
   # redis:
   #   image: redis:latest
   #   volumes:
